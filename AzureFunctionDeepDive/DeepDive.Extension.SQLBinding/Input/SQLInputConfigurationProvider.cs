@@ -6,35 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Azure.WebJobs.Host.Bindings;
+using System.Collections.Generic;
 
 namespace DeepDive.Extension.SQLBinding
 {
-   public class SQLInputConfiguration : IExtensionConfigProvider
+   public class SqlInputConfiguration : IExtensionConfigProvider
    {
       public void Initialize(ExtensionConfigContext context)
       {
-         context
-            .AddBindingRule<SQLInputBindingAttribute>()
-            .BindToInput<OpenType>(typeof(SqlServerBuilder<>));
-      }
+            var bindingRule = context.AddBindingRule<SqlInputBindingAttribute>();
+            bindingRule.BindToInput<IEnumerable<OpenType>>(typeof(SqlInputEnumerableBuilder<>));
+            bindingRule.BindToInput<OpenType>(typeof(SqlInputBuilder<>));
+        }
 
    }
-
-    internal class SqlServerBuilder<T> : IAsyncConverter<SQLInputBindingAttribute, T> where T : class
-    {
-        public async Task<T> ConvertAsync(SQLInputBindingAttribute input, CancellationToken cancellationToken)
-        {
-            var data = default(T);
-
-            using (var connection = new SqlConnection(input.SqlConnectionString))
-            {
-                var parameters = new DynamicParameters(new { });
-                input.Parameters.ForEach(param => parameters.Add(param.ParameterName, param.Value));
-
-                data = await connection.QuerySingleAsync<T>(new CommandDefinition(input.Query, parameters)).ConfigureAwait(false);
-            }
-
-            return data;
-        }
-    }
 }

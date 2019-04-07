@@ -5,8 +5,9 @@ using System.Text;
 
 namespace DeepBinding.Models
 {
-   public class ReadModel : DapperEntity, IEntity
+   public class ReadModel
     {
+        public int Id { get; set; }
       public string Name { get; set; }
       public DateTime Birthday { get; set; }
    }

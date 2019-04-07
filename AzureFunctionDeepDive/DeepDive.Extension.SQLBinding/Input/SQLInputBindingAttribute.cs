@@ -9,11 +9,11 @@ namespace DeepDive.Extension.SQLBinding
 {
    [Binding]
    [AttributeUsage(AttributeTargets.Parameter)]
-   public sealed class SQLInputBindingAttribute : Attribute
+   public sealed class SqlInputBindingAttribute : Attribute
    {
       [AppSetting(Default = "SqlInputConnectionString")]
       [Required]
-      public string SqlConnectionString { get; set; }
+      public string ConnectionString { get; set; }
 
       [AutoResolve(ResolutionPolicyType = typeof(SqlResolutionPolicy))]
       [Required]

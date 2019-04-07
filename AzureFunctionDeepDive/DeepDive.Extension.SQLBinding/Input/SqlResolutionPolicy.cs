@@ -23,11 +23,11 @@ namespace DeepDive.Extension.SQLBinding
                 throw new ArgumentNullException(nameof(bindingData));
             }
 
-            var sqlServerAttribute = resolvedAttribute as SQLInputBindingAttribute;
+            var sqlServerAttribute = resolvedAttribute as SqlInputBindingAttribute;
 
             if (sqlServerAttribute == null)
             {
-                throw new NotSupportedException($"This policy is only supported for {nameof(SQLInputBindingAttribute)}.");
+                throw new NotSupportedException($"This policy is only supported for {nameof(SqlInputBindingAttribute)}.");
             }
 
             var parameters = new List<SqlParameter>();
