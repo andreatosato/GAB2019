@@ -23,7 +23,7 @@ namespace DeepBinding
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            await sqlCollector.AddAsync(new WriteModel { Id = 1, CodArticolo = "Banane", Prezzo = 10 });
+            await sqlCollector.AddAsync(new WriteModel { Id = 2, CodArticolo = "Banane", Prezzo = 10 });
 
             return new OkObjectResult("Ok");
         }
