@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "SqlOutputConnectionString": "Server=NBTOSATO;Database=CustomBinding;User Id=sa;Password=SA;"
+    }
+}
