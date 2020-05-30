@@ -16,10 +16,10 @@ namespace DeepBinding
    {
         [FunctionName("SqlReader")]
         public IActionResult Run(
-          [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "user/{id}")]
+          [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "User/{id}")]
           HttpRequest req,
         
-          [SqlInputBinding(Query = "SELECT * FROM TestData WHERE Id = {id}")]
+          [SqlInputBinding(Query = "SELECT * FROM [dbo].[User] WHERE Id = {id}")]
           ReadModel entity,
           ILogger log)
         {
@@ -30,10 +30,10 @@ namespace DeepBinding
 
         [FunctionName("SqlReaderEnumerable")]
         public IActionResult RunEnumerable(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "user")]
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "User")]
         HttpRequest req,
 
-        [SqlInputBinding(Query = "SELECT * FROM TestData")]
+        [SqlInputBinding(Query = "SELECT * FROM [dbo].[User]")]
         IEnumerable<ReadModel> entities,
         ILogger log)
         {
