@@ -1,4 +1,5 @@
 ﻿using DeepDive.Extension.SQLBinding;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-[assembly: WebJobsStartup(typeof(DeepBinding.Startup))]
+[assembly: FunctionsStartup(typeof(DeepBinding.Startup))]
 namespace DeepBinding
 {
-    public class Startup : IWebJobsStartup
+    public class Startup : FunctionsStartup
     {
         public Startup()
         {
@@ -22,14 +23,14 @@ namespace DeepBinding
              .CreateLogger();
         }
 
-        public void Configure(IWebJobsBuilder builder)
-        {
+		public override void Configure(IFunctionsHostBuilder builder)
+		{
             builder.AddSqlBinding();
             ConfigureServices(builder.Services)
                 .BuildServiceProvider(true);
         }
 
-        private IServiceCollection ConfigureServices(IServiceCollection services)
+		private IServiceCollection ConfigureServices(IServiceCollection services)
         {
             services
                 .AddLogging(loggingBuilder =>

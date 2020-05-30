@@ -14,7 +14,7 @@ namespace DeepBinding
     {
         [FunctionName("BlobBatchInsert")]
         public async Task Run(
-            [BlobTrigger("batchinsert/{name}", Connection = "")]Stream jsonBlob, string name,
+            [BlobTrigger("batchinsert/{name}", Connection = "AzureWebJobsStorage")]Stream jsonBlob, string name,
             [SqlOutputBinding]
             IAsyncCollector<WriteModel> sqlCollector,
             ILogger log)

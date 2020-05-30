@@ -16,7 +16,7 @@ namespace DeepBinding
     {
         [FunctionName("SqlWriter")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             [SqlOutputBinding]
             IAsyncCollector<WriteModel> sqlCollector,
             ILogger log)
@@ -26,6 +26,19 @@ namespace DeepBinding
             await sqlCollector.AddAsync(new WriteModel { Id = 2, CodArticolo = "Banane", Prezzo = 10 });
 
             return new OkObjectResult("Ok");
+        }
+
+        [FunctionName("SqlWriterPost")]
+        public async Task<IActionResult> Post(
+           [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+           [SqlOutputBinding] IAsyncCollector<WriteModel> sqlCollector,
+           ILogger log)
+        {
+            WriteModel model = System.Text.Json.JsonSerializer.Deserialize<WriteModel>(await req.ReadAsStringAsync());
+
+            await sqlCollector.AddAsync(model);
+
+            return new CreatedResult($"{model.Id}", model);
         }
     }
 }

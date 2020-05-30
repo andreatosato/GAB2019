@@ -1,18 +1,14 @@
 ﻿using DeepDive.Extension.SQLBinding;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 
-[assembly: WebJobsStartup(typeof(DeepBinding.Scalability.Startup))]
+[assembly: FunctionsStartup(typeof(DeepBinding.Scalability.Startup))]
 namespace DeepBinding.Scalability
 {
-    public class Startup : IWebJobsStartup
+    public class Startup : FunctionsStartup
     {
-        public void Configure(IWebJobsBuilder builder)
-        {
+		public override void Configure(IFunctionsHostBuilder builder)
+		{
             builder.AddSqlBinding();
         }
-    }
+	}
 }
